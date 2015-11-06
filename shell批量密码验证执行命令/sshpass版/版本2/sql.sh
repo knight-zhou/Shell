@@ -1,2 +1,2 @@
 #!/bin/bash
-mysql -uroot -pHbY2015 -e "update mysql.user set Host='183.62.141.88' where Host='218.27.77.180';"
+mysql -uroot -p123456 -e "update mysql.user set Host='183.33.44.88' where Host='248.29.77.180';"
