@@ -1,0 +1,32 @@
+#!/usr/bin/expect -f
+#传入的参数
+set ipaddress [lindex $argv 0]
+set passwd [lindex $argv 1]
+set cmdfile [ open [lindex $argv 2] ]
+set timeout 30
+spawn ssh root@$ipaddress
+
+expect {
+"yes/no" { send "yes\r";exp_continue }
+"password:" { send "$passwd\r" }
+}
+
+# Run Commands
+expect "*]#\ " {
+        while {[gets $cmdfile cmd] >= 0} {
+                send "$cmd\r"
+                }
+}
+
+expect "#"
+
+##此地方可以写入文件，也可以在config下的command下写
+#send "touch /root/11111.txt\r"
+
+send "exit\r"
+
+# Close File
+close $cmdfile
+
+expect eof
+
